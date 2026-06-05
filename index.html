@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KK Music Festival Archive</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="KK Music Festival Archive">
+        <span class="brand-mark">KK</span>
+        <span>
+          <strong>KK Music Festival</strong>
+          <small>Archive</small>
+        </span>
+      </a>
+      <nav class="topnav" aria-label="Archive sections">
+        <a href="#files">Files</a>
+        <a href="#visuals">Visuals</a>
+        <a href="#folders">Folders</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="archive-hero" aria-labelledby="archive-title">
+        <div class="hero-copy">
+          <p class="eyebrow">2024-2026 collection</p>
+          <h1 id="archive-title">KK Music Festival Archive</h1>
+          <p class="intro">A playful, searchable home for documents, visuals, decks, design files, and working materials from the zip.</p>
+        </div>
+        <div class="hero-preview" id="heroPreview" aria-label="Featured archive visual"></div>
+      </section>
+
+      <section class="stats" aria-label="Archive summary">
+        <article>
+          <span id="totalFiles">0</span>
+          <p>real files</p>
+        </article>
+        <article>
+          <span id="totalSize">0 MB</span>
+          <p>archive size</p>
+        </article>
+        <article>
+          <span id="imageCount">0</span>
+          <p>visual assets</p>
+        </article>
+        <article>
+          <span id="yearRange">2024-2026</span>
+          <p>year range</p>
+        </article>
+      </section>
+
+      <section class="workspace" id="files">
+        <div class="controls" aria-label="File controls">
+          <label class="search">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="File name, folder, type..." autocomplete="off">
+          </label>
+          <label class="select-wrap">
+            <span>Sort</span>
+            <select id="sortSelect">
+              <option value="path">Folder order</option>
+              <option value="name">Name A-Z</option>
+              <option value="size">Largest first</option>
+              <option value="modified">Newest first</option>
+            </select>
+          </label>
+          <div class="view-toggle" aria-label="View mode">
+            <button class="is-active" type="button" data-view="grid">Grid</button>
+            <button type="button" data-view="list">List</button>
+          </div>
+        </div>
+
+        <div class="filter-band">
+          <div>
+            <p class="filter-label">Year</p>
+            <div class="segmented" id="yearFilters" aria-label="Year filter"></div>
+          </div>
+          <div>
+            <p class="filter-label">Type</p>
+            <div class="segmented" id="typeFilters" aria-label="File type filter"></div>
+          </div>
+        </div>
+
+        <div class="result-bar">
+          <p id="resultCount">0 files</p>
+          <button class="quiet-button" id="clearFilters" type="button">Clear filters</button>
+        </div>
+
+        <div class="file-grid" id="fileGrid"></div>
+      </section>
+
+      <section class="visuals" id="visuals" aria-labelledby="visual-title">
+        <div class="section-head">
+          <p class="eyebrow">Image highlights</p>
+          <h2 id="visual-title">Visual pieces from the archive</h2>
+        </div>
+        <div class="visual-strip" id="visualStrip"></div>
+      </section>
+
+      <section class="folders" id="folders" aria-labelledby="folder-title">
+        <div class="section-head">
+          <p class="eyebrow">Folder map</p>
+          <h2 id="folder-title">What lives where</h2>
+        </div>
+        <div class="folder-list" id="folderList"></div>
+      </section>
+    </main>
+
+    <script src="data/files.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
