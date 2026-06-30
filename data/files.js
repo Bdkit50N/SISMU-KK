@@ -36,18 +36,6 @@ window.ARCHIVE_FILES = [
     "href": "files/03-KK音乐节/2024/售票推文.docx"
   },
   {
-    "id": 4,
-    "name": "市场公关 吴怡萱AmyWu Y12 13611857025.pdf",
-    "path": "03-KK音乐节/2024/市场公关 吴怡萱AmyWu Y12 13611857025.pdf",
-    "folder": "2024",
-    "year": "2024",
-    "extension": "pdf",
-    "category": "document",
-    "size": 2028470,
-    "modified": "2026-02-03",
-    "href": "files/03-KK音乐节/2024/市场公关 吴怡萱AmyWu Y12 13611857025.pdf"
-  },
-  {
     "id": 3,
     "name": "民办非营利组织成立申请.pdf",
     "path": "03-KK音乐节/2024/民办非营利组织成立申请.pdf",
