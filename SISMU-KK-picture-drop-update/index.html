@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KK Asset Board</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#board" aria-label="KK Asset Board">
+        <span class="brand-mark">KK</span>
+        <span>
+          <strong>Asset Board</strong>
+          <small id="repoLabel">Bdkit50N / SISMU-KK</small>
+        </span>
+      </a>
+      <div class="top-actions">
+        <button class="ghost-button" id="syncButton" type="button">Pull</button>
+        <button class="ghost-button" id="connectButton" type="button">Login</button>
+        <button class="primary-button" id="publishButton" type="button">Publish</button>
+      </div>
+    </header>
+
+    <main class="page" id="board">
+      <section class="hero">
+        <div>
+          <p class="eyebrow" id="modeLabel">Local board</p>
+          <h1>Drop pictures. Sort together.</h1>
+        </div>
+        <div class="hero-stats">
+          <article>
+            <span id="totalAssets">0</span>
+            <small>assets</small>
+          </article>
+          <article>
+            <span id="totalFolders">0</span>
+            <small>folders</small>
+          </article>
+          <article>
+            <span id="pendingStatus">0 changes</span>
+            <small id="connectionStatus">Offline</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="control-strip" aria-label="Board controls">
+        <input id="searchInput" type="search" placeholder="Search assets, tags, owners..." autocomplete="off">
+        <select id="typeFilter"></select>
+        <button class="ghost-button" id="newFolderButton" type="button">New Folder</button>
+        <button class="primary-button" id="addFilesButton" type="button">Add Files</button>
+        <input id="fileInput" type="file" multiple hidden>
+      </section>
+
+      <section class="drop-panel" id="dropPanel" aria-label="Upload files">
+        <button class="drop-target" type="button" id="dropPanelButton">
+          <strong>Drag & drop to add</strong>
+          <span>Images, PDFs, decks, sheets, and design files save as local drafts first.</span>
+        </button>
+        <div class="visual-rail" id="visualRail" aria-label="Picture previews"></div>
+      </section>
+
+      <section class="board-wrap" aria-label="Asset folders">
+        <div class="folder-board" id="folderBoard"></div>
+      </section>
+    </main>
+
+    <dialog class="modal" id="connectDialog">
+      <form method="dialog" class="modal-card" id="connectForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">GitHub</p>
+            <h2>Team Login</h2>
+          </div>
+          <button class="icon-close" value="cancel" type="submit">x</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Owner</span>
+            <input id="repoOwner" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>Repository</span>
+            <input id="repoName" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>Branch</span>
+            <input id="repoBranch" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>Fine-grained token</span>
+            <input id="repoToken" type="password" autocomplete="off">
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button class="ghost-button" id="disconnectButton" type="button">Disconnect</button>
+          <button class="primary-button" value="default" type="submit">Connect</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="editDialog">
+      <form method="dialog" class="modal-card" id="editForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Asset</p>
+            <h2 id="editTitle">Edit</h2>
+          </div>
+          <button class="icon-close" value="cancel" type="submit">x</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Name</span>
+            <input id="editName" type="text">
+          </label>
+          <label>
+            <span>Folder</span>
+            <input id="editFolder" type="text" list="folderOptions">
+          </label>
+          <label>
+            <span>Owner</span>
+            <input id="editOwner" type="text">
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="editStatus"></select>
+          </label>
+        </div>
+        <label>
+          <span>Tags</span>
+          <input id="editTags" type="text">
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea id="editNotes" rows="4"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button class="danger-button" id="deleteAssetButton" type="button">Delete</button>
+          <button class="primary-button" value="default" type="submit">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="folderDialog">
+      <form method="dialog" class="modal-card" id="folderForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Folder</p>
+            <h2>New Folder</h2>
+          </div>
+          <button class="icon-close" value="cancel" type="submit">x</button>
+        </div>
+        <label>
+          <span>Folder name</span>
+          <input id="newFolderName" type="text" placeholder="2026/posters">
+        </label>
+        <div class="modal-actions">
+          <button class="ghost-button" value="cancel" type="submit">Cancel</button>
+          <button class="primary-button" value="default" type="submit">Create</button>
+        </div>
+      </form>
+    </dialog>
+
+    <datalist id="folderOptions"></datalist>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="data/files.js"></script>
+    <script src="data/inventory.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
