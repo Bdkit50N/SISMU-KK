@@ -3,112 +3,169 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>KK Music Festival Archive</title>
+    <title>KK Asset Board</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="KK Music Festival Archive">
+      <a class="brand" href="#board" aria-label="KK Asset Board">
         <span class="brand-mark">KK</span>
         <span>
-          <strong>KK Music Festival</strong>
-          <small>Archive</small>
+          <strong>Asset Board</strong>
+          <small id="repoLabel">Bdkit50N / SISMU-KK</small>
         </span>
       </a>
-      <nav class="topnav" aria-label="Archive sections">
-        <a href="#files">Files</a>
-        <a href="#visuals">Visuals</a>
-        <a href="#folders">Folders</a>
-      </nav>
+      <div class="top-actions">
+        <button class="ghost-button" id="syncButton" type="button">Pull</button>
+        <button class="ghost-button" id="connectButton" type="button">Login</button>
+        <button class="primary-button" id="publishButton" type="button">Publish</button>
+      </div>
     </header>
 
-    <main id="top">
-      <section class="archive-hero" aria-labelledby="archive-title">
-        <div class="hero-copy">
-          <p class="eyebrow">2024-2026 collection</p>
-          <h1 id="archive-title">KK Music Festival Archive</h1>
-          <p class="intro">A playful, searchable home for documents, visuals, decks, design files, and working materials from the zip.</p>
+    <main class="page" id="board">
+      <section class="hero">
+        <div>
+          <p class="eyebrow" id="modeLabel">Local board</p>
+          <h1>Drop pictures. Sort together.</h1>
         </div>
-        <div class="hero-preview" id="heroPreview" aria-label="Featured archive visual"></div>
+        <div class="hero-stats">
+          <article>
+            <span id="totalAssets">0</span>
+            <small>assets</small>
+          </article>
+          <article>
+            <span id="totalFolders">0</span>
+            <small>folders</small>
+          </article>
+          <article>
+            <span id="pendingStatus">0 changes</span>
+            <small id="connectionStatus">Offline</small>
+          </article>
+        </div>
       </section>
 
-      <section class="stats" aria-label="Archive summary">
-        <article>
-          <span id="totalFiles">0</span>
-          <p>real files</p>
-        </article>
-        <article>
-          <span id="totalSize">0 MB</span>
-          <p>archive size</p>
-        </article>
-        <article>
-          <span id="imageCount">0</span>
-          <p>visual assets</p>
-        </article>
-        <article>
-          <span id="yearRange">2024-2026</span>
-          <p>year range</p>
-        </article>
+      <section class="control-strip" aria-label="Board controls">
+        <input id="searchInput" type="search" placeholder="Search assets, tags, owners..." autocomplete="off">
+        <select id="typeFilter"></select>
+        <button class="ghost-button" id="newFolderButton" type="button">New Folder</button>
+        <button class="primary-button" id="addFilesButton" type="button">Add Files</button>
+        <input id="fileInput" type="file" multiple hidden>
       </section>
 
-      <section class="workspace" id="files">
-        <div class="controls" aria-label="File controls">
-          <label class="search">
-            <span>Search</span>
-            <input id="searchInput" type="search" placeholder="File name, folder, type..." autocomplete="off">
-          </label>
-          <label class="select-wrap">
-            <span>Sort</span>
-            <select id="sortSelect">
-              <option value="path">Folder order</option>
-              <option value="name">Name A-Z</option>
-              <option value="size">Largest first</option>
-              <option value="modified">Newest first</option>
-            </select>
-          </label>
-          <div class="view-toggle" aria-label="View mode">
-            <button class="is-active" type="button" data-view="grid">Grid</button>
-            <button type="button" data-view="list">List</button>
-          </div>
-        </div>
-
-        <div class="filter-band">
-          <div>
-            <p class="filter-label">Year</p>
-            <div class="segmented" id="yearFilters" aria-label="Year filter"></div>
-          </div>
-          <div>
-            <p class="filter-label">Type</p>
-            <div class="segmented" id="typeFilters" aria-label="File type filter"></div>
-          </div>
-        </div>
-
-        <div class="result-bar">
-          <p id="resultCount">0 files</p>
-          <button class="quiet-button" id="clearFilters" type="button">Clear filters</button>
-        </div>
-
-        <div class="file-grid" id="fileGrid"></div>
+      <section class="drop-panel" id="dropPanel" aria-label="Upload files">
+        <button class="drop-target" type="button" id="dropPanelButton">
+          <strong>Drag & drop to add</strong>
+          <span>Images, PDFs, decks, sheets, and design files save as local drafts first.</span>
+        </button>
+        <div class="visual-rail" id="visualRail" aria-label="Picture previews"></div>
       </section>
 
-      <section class="visuals" id="visuals" aria-labelledby="visual-title">
-        <div class="section-head">
-          <p class="eyebrow">Image highlights</p>
-          <h2 id="visual-title">Visual pieces from the archive</h2>
-        </div>
-        <div class="visual-strip" id="visualStrip"></div>
-      </section>
-
-      <section class="folders" id="folders" aria-labelledby="folder-title">
-        <div class="section-head">
-          <p class="eyebrow">Folder map</p>
-          <h2 id="folder-title">What lives where</h2>
-        </div>
-        <div class="folder-list" id="folderList"></div>
+      <section class="board-wrap" aria-label="Asset folders">
+        <div class="folder-board" id="folderBoard"></div>
       </section>
     </main>
 
+    <dialog class="modal" id="connectDialog">
+      <form method="dialog" class="modal-card" id="connectForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">GitHub</p>
+            <h2>Team Login</h2>
+          </div>
+          <button class="icon-close" value="cancel" type="submit">x</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Owner</span>
+            <input id="repoOwner" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>Repository</span>
+            <input id="repoName" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>Branch</span>
+            <input id="repoBranch" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>Fine-grained token</span>
+            <input id="repoToken" type="password" autocomplete="off">
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button class="ghost-button" id="disconnectButton" type="button">Disconnect</button>
+          <button class="primary-button" value="default" type="submit">Connect</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="editDialog">
+      <form method="dialog" class="modal-card" id="editForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Asset</p>
+            <h2 id="editTitle">Edit</h2>
+          </div>
+          <button class="icon-close" value="cancel" type="submit">x</button>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Name</span>
+            <input id="editName" type="text">
+          </label>
+          <label>
+            <span>Folder</span>
+            <input id="editFolder" type="text" list="folderOptions">
+          </label>
+          <label>
+            <span>Owner</span>
+            <input id="editOwner" type="text">
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="editStatus"></select>
+          </label>
+        </div>
+        <label>
+          <span>Tags</span>
+          <input id="editTags" type="text">
+        </label>
+        <label>
+          <span>Notes</span>
+          <textarea id="editNotes" rows="4"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button class="danger-button" id="deleteAssetButton" type="button">Delete</button>
+          <button class="primary-button" value="default" type="submit">Save</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="modal" id="folderDialog">
+      <form method="dialog" class="modal-card" id="folderForm">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Folder</p>
+            <h2>New Folder</h2>
+          </div>
+          <button class="icon-close" value="cancel" type="submit">x</button>
+        </div>
+        <label>
+          <span>Folder name</span>
+          <input id="newFolderName" type="text" placeholder="2026/posters">
+        </label>
+        <div class="modal-actions">
+          <button class="ghost-button" value="cancel" type="submit">Cancel</button>
+          <button class="primary-button" value="default" type="submit">Create</button>
+        </div>
+      </form>
+    </dialog>
+
+    <datalist id="folderOptions"></datalist>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <script src="data/files.js"></script>
+    <script src="data/inventory.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
